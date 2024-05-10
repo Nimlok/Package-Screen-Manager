@@ -27,7 +27,11 @@ namespace Screens
                 return;
             } 
             
-            PlayTransitionIn(OnLoadComplete);
+            PlayTransitionIn(() =>
+            {
+                transitionEvents.onTransitionInComplete?.Invoke();
+                OnLoadComplete?.Invoke();
+            });
         }
 
         public void UnloadScreen(Action onUnloadComplete)
@@ -40,7 +44,11 @@ namespace Screens
                 return;
             }
             
-            PlayTransitionOut(onUnloadComplete);
+            PlayTransitionOut(() =>
+            {
+                transitionEvents.onTransitionOutComplete?.Invoke();
+                onUnloadComplete?.Invoke();
+            });
         }
         
         protected abstract void PlayTransitionIn(Action onTransitionComplete);
