@@ -1,7 +1,9 @@
 {
     "name": "ScreenManager",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:c145dfe024cdf4e0493622307e066880"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

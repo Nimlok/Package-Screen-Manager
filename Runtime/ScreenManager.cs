@@ -13,7 +13,19 @@ namespace Screens
         private TransitionableScreen currentScreen;
         public List<TransitionableScreen> GetAllScreens => screens;
         public TransitionableScreen GetCurrentScreen => currentScreen;
-        
+
+        public static Action<string> TransitionToScreenWithID;
+
+        private void OnEnable()
+        {
+            TransitionToScreenWithID += TransitionToScreen;
+        }
+
+        private void OnDisable()
+        {
+            TransitionToScreenWithID -= TransitionToScreen;
+        }
+
         private void Awake()
         {
            GetScreensFromChildren();
