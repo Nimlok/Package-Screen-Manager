@@ -1,27 +1,50 @@
 using System;
+using System.Collections;
+using UnityEngine;
 
 namespace Screens
 {
     public class AnimatorTransitionableScreen: TransitionableScreen
     {
+        [Space]
+        [SerializeField] private string TransitionInTrigger;
+        [SerializeField] private string TransitionOutTrigger;
+        [Space]
+        [SerializeField] private string TransitionInClipName;
+        [SerializeField] private string TransitionOutClipName;
+        [Space]
+        [SerializeField] private Animator animator;
+
+        private string currentClipName;
+        
         protected override void PlayTransitionIn(Action onTransitionComplete)
         {
-            throw new NotImplementedException();
+            animator.SetTrigger(TransitionInTrigger);
+            currentClipName = TransitionInClipName;
+            StartCoroutine(WaitForClipToFinish(onTransitionComplete));
         }
 
         protected override void PlayTransitionOut(Action onTransitionComplete)
         {
-            throw new NotImplementedException();
+            animator.SetTrigger(TransitionOutTrigger);
+            currentClipName = TransitionOutClipName;
+            StartCoroutine(WaitForClipToFinish(onTransitionComplete));
         }
 
         protected override void StopTransition()
         {
-            throw new NotImplementedException();
+            
         }
 
+        private IEnumerator WaitForClipToFinish(Action animationComplete)
+        {
+            yield return new WaitUntil(IsPlaying);
+            animationComplete?.Invoke();
+        }
+        
         public override bool IsPlaying()
         {
-            throw new NotImplementedException();
+            return animator.GetCurrentAnimatorStateInfo(0).IsName(currentClipName) && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f;
         }
     }
 }

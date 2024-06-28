@@ -1,21 +1,20 @@
 {
-    "name": "com.nimlok.screenmanager",
-    "version": "0.0.2",
-    "displayName": "Screen Manager",
-    "description": "Manage screen transitioning to screens",
-    "unity": "2019.1",
-    "unityRelease": "0b5",
-    "documentationUrl": "https://example.com/",
-    "changelogUrl": "https://example.com/changelog.html",
-    "licensesUrl": "https://example.com/licensing.html",
-    "dependencies": {},
-    "keywords": [
-        "Screen",
-        "Nimlok"
-    ],
-    "author": {
-        "name": "Nimlok",
-        "email": "Daniel.shapley@nimlok.co.uk",
-        "url": "https://www.nimlok.co.uk"
-    }
+  "name": "com.nimlok.screenmanager",
+  "version": "0.0.3",
+  "displayName": "Screen Manager",
+  "description": "Manage screen transitioning to screens",
+  "unity": "2019.1",
+  "unityRelease": "0b5",
+  "documentationUrl": "https://example.com/",
+  "changelogUrl": "https://example.com/changelog.html",
+  "licensesUrl": "https://example.com/licensing.html",
+  "keywords": [
+    "Screen",
+    "Nimlok"
+  ],
+  "author": {
+    "name": "Nimlok",
+    "email": "Daniel.shapley@nimlok.co.uk",
+    "url": "https://www.nimlok.co.uk"
+  }
 }
