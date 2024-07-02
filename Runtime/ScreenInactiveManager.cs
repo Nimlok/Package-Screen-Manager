@@ -32,8 +32,8 @@ namespace Screens
             
             if (Input.anyKey)
             {
-                onAnyKeyPressed?.Invoke();
                 Stop();
+                onAnyKeyPressed?.Invoke();
             }
         }
 
