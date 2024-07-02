@@ -15,6 +15,8 @@ namespace Screens
         public static Action TriggerLoopingScreens;
         public static Action StopLoopScreens;
 
+        private bool looping;
+
         private void OnEnable()
         {
             TriggerLoopingScreens += StartLoop;
@@ -39,19 +41,29 @@ namespace Screens
         
         public void StartLoop()
         {
-            CheckCurrentScreen();
-            var currentScreen = loopScreens[index];
-            currentCoroutine = StartCoroutine(LoopScreen(currentScreen));
+            if (looping)
+                return;
+
+            looping = true;
+            NextLoopScreen();
         }
 
         public void StopLoop()
         {
-            if (currentCoroutine == null)
+            if(!looping || currentCoroutine == null)
                 return;
             
+            looping = false;
             StopCoroutine(currentCoroutine);
         }
 
+        private void NextLoopScreen()
+        {
+            CheckCurrentScreen();
+            var currentScreen = loopScreens[index];
+            currentCoroutine = StartCoroutine(LoopScreen(currentScreen));
+        }
+        
         private void GetLoopableScreens()
         {
             var allScreens = screenManager.GetAllScreens;
@@ -69,8 +81,7 @@ namespace Screens
             }
             
             yield return new WaitForSeconds(loopProperties.loopTime);
-            UpdateIndex();
-            StartLoop();
+            NextLoopScreen();
         }
 
         private void UpdateIndex()
@@ -85,7 +96,7 @@ namespace Screens
         private void CheckCurrentScreen()
         {
             var currentScreen = loopScreens[index];
-            if (string.CompareOrdinal(screenManager.GetCurrentScreen.GetID, currentScreen.GetID) == 0)
+            if (currentScreen == screenManager.GetCurrentScreen)
             {
                 UpdateIndex();
             }
