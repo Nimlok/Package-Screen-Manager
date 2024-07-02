@@ -20,12 +20,6 @@ namespace Screens
 
         private void Update()
         {
-            if (Input.anyKey)
-            {
-                onAnyKeyPressed?.Invoke();
-                Reset();
-            }
-        
             if (!active)
                 return;
 
@@ -34,7 +28,12 @@ namespace Screens
             {
                 Stop();
                 onIdle?.Invoke();
+            }
             
+            if (Input.anyKey)
+            {
+                onAnyKeyPressed?.Invoke();
+                Stop();
             }
         }
 
