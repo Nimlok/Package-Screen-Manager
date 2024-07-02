@@ -2,19 +2,19 @@ using UnityEngine;
 
 namespace Screens
 {
-    public class TransitionToScreenComponent: MonoBehaviour
+    public class TransitionToScreenWithIDComponent: MonoBehaviour
     {
-        [SerializeField] private TransitionableScreen screen;
+        [SerializeField] private string screenID;
 
         public void TransitionToScreen()
         {
-            if (screen == null)
+            if (string.IsNullOrEmpty(screenID))
             {
                 Debug.LogError($"Missing Screen ID: {gameObject.name}");
                 return;
             }
             
-            ScreenManager.TransitionToScreenWithScreen?.Invoke(screen);
+            ScreenManager.TransitionToScreenWithID?.Invoke(screenID);
         }
     }
 }

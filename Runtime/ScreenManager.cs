@@ -16,14 +16,18 @@ namespace Screens
 
         public static Action<string> TransitionToScreenWithID;
 
+        public static Action<TransitionableScreen> TransitionToScreenWithScreen;
+
         private void OnEnable()
         {
             TransitionToScreenWithID += TransitionToScreen;
+            TransitionToScreenWithScreen += TransitionToScreen;
         }
 
         private void OnDisable()
         {
             TransitionToScreenWithID -= TransitionToScreen;
+            TransitionToScreenWithScreen -= TransitionToScreen;
         }
 
         private void Awake()
