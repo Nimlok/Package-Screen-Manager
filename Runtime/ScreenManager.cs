@@ -45,7 +45,7 @@ namespace Screens
         //TODO: DS 23/04/24 Remove if not required
         public void TransitionToScreen(string id)
         {
-            if (currentScreen != null && string.CompareOrdinal(currentScreen.GetID, id) == 0)
+            if (currentScreen != null)
             {
                 Debug.LogWarning($"Trying to load current screen {currentScreen.GetID}");
                 return;
@@ -64,6 +64,9 @@ namespace Screens
                 Debug.LogError("Missing screen from event");
                 return;
             }
+            
+            if(currentScreen == transitionableScreen)
+                return;
             
             UnloadScreen(currentScreen, () =>
             {

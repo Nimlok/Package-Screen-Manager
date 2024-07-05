@@ -7,6 +7,8 @@ namespace Screens
     [RequireComponent(typeof(ScreenManager))]
     public class LoopScreenManager: MonoBehaviour
     {
+        [SerializeField] private bool active;
+        
         private TransitionableScreen[] loopScreens;
         private ScreenManager screenManager;
         private Coroutine currentCoroutine;
@@ -36,12 +38,15 @@ namespace Screens
 
         private void Start()
         {
+            if (!active)
+                return;
+            
             GetLoopableScreens();
         }
         
         public void StartLoop()
         {
-            if (looping)
+            if (!active || looping)
                 return;
 
             looping = true;
