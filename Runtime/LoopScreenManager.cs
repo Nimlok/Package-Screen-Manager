@@ -7,8 +7,6 @@ namespace Screens
     [RequireComponent(typeof(ScreenManager))]
     public class LoopScreenManager: MonoBehaviour
     {
-        [SerializeField] private bool active;
-        
         private TransitionableScreen[] loopScreens;
         private ScreenManager screenManager;
         private Coroutine currentCoroutine;
@@ -19,6 +17,7 @@ namespace Screens
 
         private bool looping;
 
+        #region  Unity Events
         private void OnEnable()
         {
             TriggerLoopingScreens += StartLoop;
@@ -38,17 +37,30 @@ namespace Screens
 
         private void Start()
         {
-            if (!active)
-                return;
-            
             GetLoopableScreens();
+        }
+        #endregion
+
+        public void StartFromIdle()
+        {
+            if (looping)
+                return;
+
+            if (screenManager.GetOnInitalScreen)
+            {
+                StartLoop();
+            }
+            else
+            {
+                screenManager.ReturnToInitialScreen();
+            }
         }
         
         public void StartLoop()
         {
-            if (!active || looping)
+            if (looping)
                 return;
-
+            
             looping = true;
             NextLoopScreen();
         }

@@ -14,6 +14,9 @@ namespace Screens
         public List<TransitionableScreen> GetAllScreens => screens;
         public TransitionableScreen GetCurrentScreen => currentScreen;
 
+        public bool GetOnInitalScreen => currentScreen == initialScreen;
+        
+
         public static Action<string> TransitionToScreenWithID;
 
         public static Action<TransitionableScreen> TransitionToScreenWithScreen;
@@ -42,6 +45,11 @@ namespace Screens
                 LoadScreen(initialScreen);
         }
 
+        public void ReturnToInitialScreen()
+        {
+            TransitionToScreen(initialScreen);
+        }
+        
         //TODO: DS 23/04/24 Remove if not required
         public void TransitionToScreen(string id)
         {
@@ -73,18 +81,9 @@ namespace Screens
                 LoadScreen(transitionableScreen);
             });
         }
-
+        
         //TODO: DS 23/04/24 Remove if not required
-        public void UnloadScreen(string id)
-        {
-            var screen = FindScreen(id);
-            if (screen == null)
-                return;
-            UnloadScreen(screen);
-        }
-
-        //TODO: DS 23/04/24 Remove if not required
-        public void LoadScreenById(string id)
+        private void LoadScreenById(string id)
         {
             var screen = FindScreen(id);
             if (screen == null)
@@ -144,8 +143,7 @@ namespace Screens
 
             screens = GetComponentsInChildren<TransitionableScreen>(true).ToList();
         }
-
-        //TODO: DS 29.04.24 Possibly rename
+        
         private void SetAllScreenActive(bool active)
         {
             foreach (var screen in screens)

@@ -19,6 +19,8 @@ namespace Screens
 
         public void LoadScreen(Action OnLoadComplete)
         {
+            ScreenInactiveManager.RestartIdle?.Invoke();
+            
             //TODO: DS 19/04/24 Check to see if transition is playing
             if (!transitionIn)
             {

@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,6 +14,18 @@ namespace Screens
         [Space, SerializeField] private UnityEvent onIdle;
         [Space, SerializeField] private UnityEvent onAnyKeyPressed;
     
+        public static Action RestartIdle;
+
+        private void OnEnable()
+        {
+            RestartIdle += Reset;
+        }
+
+        private void OnDisable()
+        {
+            RestartIdle -= Reset;
+        }
+        
         private void Awake()
         {
             Reset();
@@ -51,6 +64,7 @@ namespace Screens
         private void Reset()
         {
             currentTime = idleTime;
+            StartIdle();
         }
     }
 }
