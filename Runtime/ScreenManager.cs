@@ -11,15 +11,15 @@ namespace Screens
         [SerializeField] private List<TransitionableScreen> screens;
         
         private TransitionableScreen currentScreen;
+        
         public List<TransitionableScreen> GetAllScreens => screens;
         public TransitionableScreen GetCurrentScreen => currentScreen;
-
         public bool GetOnInitalScreen => currentScreen == initialScreen;
         
-
+        
         public static Action<string> TransitionToScreenWithID;
-
         public static Action<TransitionableScreen> TransitionToScreenWithScreen;
+        public Action<TransitionableScreen> OnScreenTransitionTriggered;
 
         private void OnEnable()
         {
@@ -58,10 +58,19 @@ namespace Screens
                 Debug.LogWarning($"Trying to load current screen {currentScreen.GetID}");
                 return;
             }
+
+            var screen = FindScreen(id);
+            if (screen == null)
+            {
+                Debug.LogWarning($"Couldn't find screen with ID: {id}");
+                return;
+            }
+            
+            OnScreenTransitionTriggered?.Invoke(screen);
             
             UnloadScreen(currentScreen, () =>
             {
-                LoadScreenById(id);
+                LoadScreen(screen);
             });
         }
 
@@ -76,19 +85,12 @@ namespace Screens
             if(currentScreen == transitionableScreen)
                 return;
             
+            OnScreenTransitionTriggered?.Invoke(transitionableScreen);
+            
             UnloadScreen(currentScreen, () =>
             {
                 LoadScreen(transitionableScreen);
             });
-        }
-        
-        //TODO: DS 23/04/24 Remove if not required
-        private void LoadScreenById(string id)
-        {
-            var screen = FindScreen(id);
-            if (screen == null)
-                return;
-            LoadScreen(screen);
         }
         
         private void LoadScreen(TransitionableScreen screen  ,Action OnLoadComplete = null)
