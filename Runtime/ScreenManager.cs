@@ -111,6 +111,7 @@ namespace Screens
             if (screen == null)
             {
                 Debug.LogWarning($"Failed to unload screen: screen was null");
+                OnUnloadComplete?.Invoke();
                 return;
             }
             
