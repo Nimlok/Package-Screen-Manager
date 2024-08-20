@@ -5,8 +5,10 @@ using UnityEngine;
 namespace Screens
 {
     [RequireComponent(typeof(ScreenManager))]
+    [RequireComponent(typeof(ScreenInactiveManager))]
     public class LoopScreenManager: MonoBehaviour
     {
+        private ScreenInactiveManager screenInactiveManager;
         private TransitionableScreen[] loopScreens;
         private ScreenManager screenManager;
         private Coroutine currentCoroutine;
@@ -32,9 +34,46 @@ namespace Screens
 
         private void Awake()
         {
-            screenManager = GetComponent<ScreenManager>();  
+            screenManager = GetComponent<ScreenManager>();
+            screenInactiveManager = GetComponent<ScreenInactiveManager>();
+            screenManager.OnScreenTransitionTriggered += OnScreenTransitioned;
+            
+            screenInactiveManager.onIdle.AddListener(() =>
+            {
+                StartLoop();
+                screenInactiveManager.Stop();
+            });
+            
+            screenInactiveManager.onAnyKeyPressed.AddListener(() =>
+            {
+                StopLoop();
+                screenInactiveManager.Stop();
+            });
+            
+            if (screenManager.HasInitialScreen && screenManager.GetInitialScreen.GetLoopProperties.loopingScreen)
+            {
+                screenInactiveManager.StartIdle();
+            }
         }
 
+        private void OnScreenTransitioned(TransitionableScreen screen)
+        {
+            if (!screen.GetLoopProperties.loopingScreen)
+            {
+                screenInactiveManager.Stop();
+                
+                if(looping)
+                    StopLoop();
+                
+                return;
+            }
+
+            if (looping)
+                return;
+            
+            screenInactiveManager.StartIdle();
+        }
+        
         private void Start()
         {
             GetLoopableScreens();
@@ -46,7 +85,7 @@ namespace Screens
             if (looping)
                 return;
 
-            if (screenManager.GetOnInitalScreen)
+            if (screenManager.HasInitialScreen)
             {
                 StartLoop();
             }
@@ -67,11 +106,9 @@ namespace Screens
 
         public void StopLoop()
         {
-            if(!looping || currentCoroutine == null)
-                return;
-            
             looping = false;
-            StopCoroutine(currentCoroutine);
+            if(currentCoroutine != null)
+                StopCoroutine(currentCoroutine);
         }
 
         private void NextLoopScreen()

@@ -11,8 +11,8 @@ namespace Screens
         [BoxGroup, ShowInInspector, ReadOnly] private float currentTime;
     
         [Space, SerializeField] private float idleTime;
-        [Space, SerializeField] private UnityEvent onIdle;
-        [Space, SerializeField] private UnityEvent onAnyKeyPressed;
+        [Space] public UnityEvent onIdle;
+        [Space] public UnityEvent onAnyKeyPressed;
     
         public static Action RestartIdle;
 
@@ -64,7 +64,6 @@ namespace Screens
         private void Reset()
         {
             currentTime = idleTime;
-            StartIdle();
         }
     }
 }

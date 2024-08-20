@@ -14,7 +14,8 @@ namespace Screens
         
         public List<TransitionableScreen> GetAllScreens => screens;
         public TransitionableScreen GetCurrentScreen => currentScreen;
-        public bool GetOnInitalScreen => currentScreen == initialScreen;
+        public bool HasInitialScreen => initialScreen != null;
+        public TransitionableScreen GetInitialScreen => initialScreen;
         
         
         public static Action<string> TransitionToScreenWithID;
