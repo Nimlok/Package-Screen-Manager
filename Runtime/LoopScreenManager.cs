@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Screens
+namespace Nimlok.Screens
 {
     [RequireComponent(typeof(ScreenManager))]
     [RequireComponent(typeof(ScreenInactiveManager))]

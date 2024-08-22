@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Screens
+namespace Nimlok.Screens
 {
     public abstract class TransitionableScreen: MonoBehaviour
     {

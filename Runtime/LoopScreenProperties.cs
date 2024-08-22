@@ -1,6 +1,6 @@
 using System;
 
-namespace Screens
+namespace Nimlok.Screens
 {
     [Serializable]
     public class LoopScreenProperties

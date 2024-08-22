@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Screens
+namespace Nimlok.Screens
 {
     public class ScreenInactiveManager : MonoBehaviour
     {

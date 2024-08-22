@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Screens
+namespace Nimlok.Screens
 {
     [RequireComponent(typeof(ScreenManager))]
     public class ScreenManagerTracker: MonoBehaviour

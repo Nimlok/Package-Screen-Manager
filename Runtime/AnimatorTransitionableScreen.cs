@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Screens
+namespace Nimlok.Screens
 {
     public class AnimatorTransitionableScreen: TransitionableScreen
     {

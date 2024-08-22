@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Screens
+namespace Nimlok.Screens
 {
     public class TransitionToScreenComponent: MonoBehaviour
     {

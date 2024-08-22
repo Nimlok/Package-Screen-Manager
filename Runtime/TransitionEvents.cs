@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.Events;
 
-namespace Screens
+namespace Nimlok.Screens
 {
     [Serializable]
     public class TransitionEvents
