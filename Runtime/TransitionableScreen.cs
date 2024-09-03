@@ -1,4 +1,5 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Nimlok.Screens
@@ -6,17 +7,29 @@ namespace Nimlok.Screens
     public abstract class TransitionableScreen: MonoBehaviour
     {
         //TODO: DS 24.04.24 Remove ID if no longer required 
-        [SerializeField] private string id;
-        [SerializeField] private bool transitionIn = true;
-        [SerializeField] private bool transitionOut = true;
-        [SerializeField] private LoopScreenProperties loopingScreen;
+        [SerializeField, PropertyOrder(-10)] private string id;
         
-        [Space]
+        [BoxGroup("Loop Properties"), SerializeField] private bool loopingScreen;
+        [SerializeField, ShowIf("loopingScreen")] private LoopScreenProperties loopingScreenProperties;
+        
+        [BoxGroup("Transition In"), SerializeField]
+        private bool transitionIn = true;
+        
+        [BoxGroup("Transition Out"), OnValueChanged("TransitionOutChanged"), SerializeField] 
+        protected bool transitionOut = true;
+        
+        [Space, PropertyOrder(1)]
         [SerializeField] protected TransitionEvents transitionEvents;
         
         public string GetID => id;
-        public LoopScreenProperties GetLoopProperties => loopingScreen;
+        public LoopScreenProperties GetLoopProperties => loopingScreenProperties;
+        public bool LoopingScreen => loopingScreen;
 
+        protected virtual void TransitionOutChanged()
+        {
+            
+        }
+        
         public void LoadScreen(Action OnLoadComplete)
         {
             ScreenInactiveManager.RestartIdle?.Invoke();

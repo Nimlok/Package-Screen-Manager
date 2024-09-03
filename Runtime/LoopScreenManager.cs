@@ -19,6 +19,8 @@ namespace Nimlok.Screens
 
         private bool looping;
 
+        private LoopScreenProperties currentLoopingProperties;
+
         #region  Unity Events
         private void OnEnable()
         {
@@ -50,7 +52,7 @@ namespace Nimlok.Screens
                 screenInactiveManager.Stop();
             });
             
-            if (screenManager.HasInitialScreen && screenManager.GetInitialScreen.GetLoopProperties.loopingScreen)
+            if (screenManager.HasInitialScreen && screenManager.GetInitialScreen.LoopingScreen)
             {
                 screenInactiveManager.StartIdle();
             }
@@ -58,7 +60,7 @@ namespace Nimlok.Screens
 
         private void OnScreenTransitioned(TransitionableScreen screen)
         {
-            if (!screen.GetLoopProperties.loopingScreen)
+            if (!screen.LoopingScreen)
             {
                 screenInactiveManager.Stop();
                 
@@ -113,28 +115,48 @@ namespace Nimlok.Screens
 
         private void NextLoopScreen()
         {
+            if (currentLoopingProperties.nextScreen != null)
+            {
+                index = FindIndex(currentLoopingProperties.nextScreen);
+                currentCoroutine = StartCoroutine(LoopScreen(currentLoopingProperties.nextScreen));
+                return;
+            }
+            
             CheckCurrentScreen();
             var currentScreen = loopScreens[index];
             currentCoroutine = StartCoroutine(LoopScreen(currentScreen));
+        }
+
+        private int FindIndex(TransitionableScreen screen)
+        {
+            for (int i = 0; i < loopScreens.Length; i++)
+            {
+                if (loopScreens[i] == screen)
+                {
+                    return i;
+                }
+            }
+
+            return 0;
         }
         
         private void GetLoopableScreens()
         {
             var allScreens = screenManager.GetAllScreens;
-            loopScreens = allScreens.FindAll(x => x.GetLoopProperties.loopingScreen).ToArray();
+            loopScreens = allScreens.FindAll(x => x.LoopingScreen).ToArray();
         }
         
         private IEnumerator LoopScreen(TransitionableScreen screen)
         {
             screenManager.TransitionToScreen(screen);
-            var loopProperties = screen.GetLoopProperties;
+            currentLoopingProperties = screen.GetLoopProperties;
             var currentScene = screenManager.GetCurrentScreen;
             while(currentScene.IsPlaying())  
             {
                 yield return null;
             }
             
-            yield return new WaitForSeconds(loopProperties.loopTime);
+            yield return new WaitForSeconds(currentLoopingProperties.loopTime);
             NextLoopScreen();
         }
 
