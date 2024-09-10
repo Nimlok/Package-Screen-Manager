@@ -18,7 +18,7 @@ namespace Nimlok.Screens
         public TransitionableScreen GetInitialScreen => initialScreen;
         
         
-        public static Action<string> TransitionToScreenWithID;
+        public static Action<int> TransitionToScreenWithID;
         public static Action<TransitionableScreen> TransitionToScreenWithScreen;
         public Action<TransitionableScreen> OnScreenTransitionTriggered;
 
@@ -52,14 +52,8 @@ namespace Nimlok.Screens
         }
         
         //TODO: DS 23/04/24 Remove if not required
-        public void TransitionToScreen(string id)
+        public void TransitionToScreen(int id)
         {
-            if (currentScreen != null)
-            {
-                Debug.LogWarning($"Trying to load current screen {currentScreen.GetID}");
-                return;
-            }
-
             var screen = FindScreen(id);
             if (screen == null)
             {
@@ -123,7 +117,7 @@ namespace Nimlok.Screens
             });
         }
         
-        private TransitionableScreen FindScreen(string id)
+        private TransitionableScreen FindScreen(int id)
         {
             if (screens == null || screens.Count == 0)
             {
@@ -131,7 +125,7 @@ namespace Nimlok.Screens
                 return null;
             }
             
-            var screen = screens.Find(x => string.CompareOrdinal(x.GetID, id) == 0);
+            var screen = screens.Find(x => x.GetID == id);
             if (screen == null)
             {
                 Debug.LogWarning($"No Screen found for {id}");

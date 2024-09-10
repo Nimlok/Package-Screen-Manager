@@ -7,7 +7,7 @@ namespace Nimlok.Screens
     public abstract class TransitionableScreen: MonoBehaviour
     {
         //TODO: DS 24.04.24 Remove ID if no longer required 
-        [SerializeField, PropertyOrder(-10)] private string id;
+        [SerializeField, PropertyOrder(-10)] private int id;
         
         [BoxGroup("Loop Properties"), SerializeField] private bool loopingScreen;
         [SerializeField, ShowIf("loopingScreen")] private LoopScreenProperties loopingScreenProperties;
@@ -21,7 +21,7 @@ namespace Nimlok.Screens
         [Space, PropertyOrder(1)]
         [SerializeField] protected TransitionEvents transitionEvents;
         
-        public string GetID => id;
+        public int GetID => id;
         public LoopScreenProperties GetLoopProperties => loopingScreenProperties;
         public bool LoopingScreen => loopingScreen;
 
