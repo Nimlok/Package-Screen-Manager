@@ -115,7 +115,7 @@ namespace Nimlok.Screens
 
         private void NextLoopScreen()
         {
-            if (currentLoopingProperties.nextScreen != null)
+            if (currentLoopingProperties != null && currentLoopingProperties.nextScreen != null)
             {
                 index = FindIndex(currentLoopingProperties.nextScreen);
                 currentCoroutine = StartCoroutine(LoopScreen(currentLoopingProperties.nextScreen));
