@@ -1,6 +1,6 @@
 {
   "name": "com.nimlok.screenmanager",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "displayName": "Screen Manager",
   "description": "Manage screen transitioning to screens",
   "unity": "2019.1",

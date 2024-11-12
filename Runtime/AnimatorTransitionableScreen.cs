@@ -19,6 +19,7 @@ namespace Nimlok.Screens
         
         protected override void PlayTransitionIn(Action onTransitionComplete)
         {
+            transitionEvents.onTransitionInStarted?.Invoke();
             animator.SetTrigger(TransitionInTrigger);
             currentClipName = TransitionInClipName;
             StartCoroutine(WaitForClipToFinish(onTransitionComplete));
@@ -26,6 +27,7 @@ namespace Nimlok.Screens
 
         protected override void PlayTransitionOut(Action onTransitionComplete)
         {
+            transitionEvents.onTransitionOutStarted?.Invoke();
             animator.SetTrigger(TransitionOutTrigger);
             currentClipName = TransitionOutClipName;
             StartCoroutine(WaitForClipToFinish(onTransitionComplete));
